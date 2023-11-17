@@ -21,7 +21,7 @@ public class Album {
 
 //    private Long user_id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 

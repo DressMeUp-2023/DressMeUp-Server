@@ -24,8 +24,8 @@ public class User {
 
     private boolean authenticated;  // 핸드폰 인증 여부
 
-    @OneToOne(mappedBy = "user")
-    private Album album;
+    @OneToMany(mappedBy = "user")
+    private List<Album> album;
 
     @OneToMany(mappedBy = "user")
     private List<UserModel> userModel;
