@@ -9,7 +9,10 @@ import lombok.Getter;
  */
 @Getter
 public enum BaseResponseStatus {
-    SUCCESS(true, 200, "요청에 성공했습니다");
+    SUCCESS(true, 200, "요청에 성공했습니다"),
+    SUCCESS_TO_SIGNUP(true, 200, "회원가입에 성공했습니다"),
+    NICKNAME_ALREADY_EXISTS(true, 400, "해당 닉네임은 사용 중 입니다."),
+    FAILED_TO_SIGNUP(true, 400, "회원가입에 실패했습니다.");
 
     private final boolean isSuccess;
 

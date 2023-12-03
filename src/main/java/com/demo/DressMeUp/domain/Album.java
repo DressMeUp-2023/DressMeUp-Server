@@ -1,5 +1,6 @@
 package com.demo.DressMeUp.domain;
 
+import com.demo.DressMeUp.domain.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,13 +26,13 @@ public class Album {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ColumnDefault("null")
+//    @ColumnDefault("null")
     private Long top_id;
 
-    @ColumnDefault("null")
+//    @ColumnDefault("null")
     private Long bottoms_id;
 
-    @ColumnDefault("null")
+//    @ColumnDefault("null")
     private Long dress_id;
 
 }
