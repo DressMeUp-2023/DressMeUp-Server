@@ -2,6 +2,7 @@ package com.demo.DressMeUp.domain.user.api;
 
 import com.demo.DressMeUp.domain.user.application.UserService;
 import com.demo.DressMeUp.domain.user.dto.LoginRes;
+import com.demo.DressMeUp.domain.user.dto.ModelRes;
 import com.demo.DressMeUp.domain.user.dto.SignUpReq;
 import com.demo.DressMeUp.global.common.BaseException;
 import com.demo.DressMeUp.global.common.BaseResponse;
@@ -12,10 +13,8 @@ import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Random;
 
@@ -39,5 +38,17 @@ public class UserController {
         }
 
     }
+
+    @PostMapping("/{userId}/model")
+    public BaseResponse<ModelRes> selectModel(@PathVariable Long userId, @RequestPart(value="image")MultipartFile multipartFile) throws BaseException{
+
+        try {
+            return new BaseResponse(userService.selectModel(userId, multipartFile));
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+
+    }
+
 
 }
