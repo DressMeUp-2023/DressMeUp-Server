@@ -1,6 +1,5 @@
 package com.demo.DressMeUp.domain;
 
-import com.demo.DressMeUp.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +21,7 @@ public class Album {
 
 //    private Long user_id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
