@@ -1,6 +1,6 @@
 package com.demo.DressMeUp.domain.user.domain;
 
-import com.demo.DressMeUp.domain.Album;
+import com.demo.DressMeUp.domain.cloth.domain.Album;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

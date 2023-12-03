@@ -15,7 +15,9 @@ public enum BaseResponseStatus {
     FAILED_TO_SIGNUP(true, 400, "회원가입에 실패했습니다."),
     NO_USER_FOUND(true, 400, "해당 유저는 존재하지 않습니다."),
     FAILED_TO_UPLOAD_CLOTHES(true, 400, "옷 업로드에 실패했습니다."),
-    NO_CLOTHES_TYPE(true, 400, "옷 타입을 제대로 지정해주세요.");
+    NO_CLOTHES_TYPE(true, 400, "옷 타입을 제대로 지정해주세요."),
+    DRESS_UP_COMPLETED(true, 200, "dress-up 저장을 완료했습니다."),
+    FAILED_TO_DRESS_UP(false, 500, "dress-up 저장에 실패하였습니다.");
 
     private final boolean isSuccess;
 

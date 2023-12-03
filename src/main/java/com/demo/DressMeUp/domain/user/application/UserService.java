@@ -1,5 +1,7 @@
 package com.demo.DressMeUp.domain.user.application;
 
+import com.demo.DressMeUp.domain.cloth.AlbumRepository;
+import com.demo.DressMeUp.domain.cloth.domain.Album;
 import com.demo.DressMeUp.domain.cloth.BottomRepository;
 import com.demo.DressMeUp.domain.cloth.DressRepository;
 import com.demo.DressMeUp.domain.cloth.TopRepository;
@@ -36,6 +38,7 @@ public class UserService {
     private final BottomRepository bottomRepository;
     private final TopRepository topRepository;
     private final DressRepository dressRepository;
+    private final AlbumRepository albumRepository;
 
     @Transactional
     public LoginRes signup(SignUpReq signUpReq) throws BaseException {
@@ -137,5 +140,30 @@ public class UserService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Transactional
+    public void dressUp(DressUpReq dressUpReq, Long userId) throws BaseException {
+
+        if (!userRepository.existsById(userId)) {
+            throw new BaseException(NO_USER_FOUND);
+        }
+
+        User loginUser = userRepository.findById(userId).get();
+
+        if (dressUpReq.getCount() == 2) {
+            Album album = albumRepository.save(Album.builder()
+                    .user(loginUser)
+                    .top_id(dressUpReq.getTopId())
+                    .bottoms_id(dressUpReq.getBottomId())
+                    .dress_id(null).build());
+        } else {
+            Album album = albumRepository.save(Album.builder()
+                    .user(loginUser)
+                    .top_id(null)
+                    .bottoms_id(null)
+                    .dress_id(dressUpReq.getDressId()).build());
+        }
+
     }
 }
