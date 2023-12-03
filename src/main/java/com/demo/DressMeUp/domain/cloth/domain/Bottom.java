@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Table(name = "bottoms")
 @Entity
-public class Bottoms {
+public class Bottom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -13,7 +13,9 @@ public enum BaseResponseStatus {
     SUCCESS_TO_SIGNUP(true, 200, "회원가입에 성공했습니다"),
     NICKNAME_ALREADY_EXISTS(true, 400, "해당 닉네임은 사용 중 입니다."),
     FAILED_TO_SIGNUP(true, 400, "회원가입에 실패했습니다."),
-    NO_USER_FOUND(true, 400, "해당 유저는 존재하지 않습니다.");
+    NO_USER_FOUND(true, 400, "해당 유저는 존재하지 않습니다."),
+    FAILED_TO_UPLOAD_CLOTHES(true, 400, "옷 업로드에 실패했습니다."),
+    NO_CLOTHES_TYPE(true, 400, "옷 타입을 제대로 지정해주세요.");
 
     private final boolean isSuccess;
 
