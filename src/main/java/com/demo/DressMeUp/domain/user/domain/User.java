@@ -1,5 +1,7 @@
-package com.demo.DressMeUp.domain;
+package com.demo.DressMeUp.domain.user.domain;
 
+import com.demo.DressMeUp.domain.Album;
+import com.demo.DressMeUp.domain.UserModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,9 +22,12 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String phone;
+    private String phonenum;
 
     private boolean authenticated;  // 핸드폰 인증 여부
+
+    @Column(unique = true)
+    private String nickname;
 
     @OneToMany(mappedBy = "user")
     private List<Album> album;
