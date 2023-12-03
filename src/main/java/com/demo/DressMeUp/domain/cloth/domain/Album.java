@@ -1,4 +1,4 @@
-package com.demo.DressMeUp.domain;
+package com.demo.DressMeUp.domain.cloth.domain;
 
 import com.demo.DressMeUp.domain.user.domain.User;
 import lombok.AllArgsConstructor;
