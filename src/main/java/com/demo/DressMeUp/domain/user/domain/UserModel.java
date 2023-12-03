@@ -35,4 +35,8 @@ public class UserModel {
             this.image = "https://dressmeup-user.s3.ap-northeast-2.amazonaws.com/%EC%97%AC%EC%9E%90.PNG";
     }
 
+    public void changeImage(String image) {
+        this.image = image;
+    }
+
 }

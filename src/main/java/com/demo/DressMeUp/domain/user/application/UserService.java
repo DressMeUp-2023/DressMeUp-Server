@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static com.demo.DressMeUp.global.common.BaseResponseStatus.*;
 
@@ -73,9 +74,11 @@ public class UserService {
             User loginUser = userRepository.findById(userId).get();
             String modelImage = s3UploadService.upload(multipartFile, "userModel");
 
-            UserModel userModel = userModelRepository.save(UserModel.builder()
-                    .user(loginUser)
-                    .image(modelImage).build());
+            Optional<UserModel> byUserId = userModelRepository.findByUserId(loginUser.getId());
+            byUserId.get().changeImage(modelImage);
+//            UserModel userModel = userModelRepository.save(UserModel.builder()
+//                    .user(loginUser)
+//                    .image(modelImage).build());
 
             return ModelRes.builder()
                     .id(loginUser.getId())
