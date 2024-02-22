@@ -10,10 +10,16 @@ import lombok.NoArgsConstructor;
 public class SignUpReq {
 
     private boolean authenticatied;  // 휴대폰 인증 일치 여부
+    private String role = "ROLE_USER";
+
 
     private String nickname;
 
     private String gender;
+
+    private String userId;
+
+    private String password;
 
     private String phonenumber;
 }

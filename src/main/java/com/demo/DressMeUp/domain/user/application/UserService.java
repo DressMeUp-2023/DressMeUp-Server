@@ -17,6 +17,7 @@ import com.demo.DressMeUp.domain.user.dto.*;
 import com.demo.DressMeUp.global.common.BaseException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final S3UploadService s3UploadService;
+    private final BCryptPasswordEncoder passwordEncoder;
     private final UserModelRepository userModelRepository;
     private final BottomRepository bottomRepository;
     private final TopRepository topRepository;
@@ -50,9 +52,14 @@ public class UserService {
 
         try {
 
+            String encodedPassword = passwordEncoder.encode(signUpReq.getPassword());
+
             User loginUser = userRepository.save(User.builder()
                     .phonenum(signUpReq.getPhonenumber())
                     .authenticated(true)
+                    .roles(signUpReq.getRole())
+                    .userId(signUpReq.getUserId())
+                    .password(encodedPassword)
                     .nickname(signUpReq.getNickname())
                     .gender(Gender.valueOf(signUpReq.getGender()))
                     .build());
