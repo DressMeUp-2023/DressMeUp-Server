@@ -25,7 +25,6 @@ public class UserController {
 
     private final UserService userService;
 
-
     @PostMapping("/sign-up")
     public BaseResponse<LoginRes> signup(@RequestBody SignUpReq signUpReq) {
         try {
