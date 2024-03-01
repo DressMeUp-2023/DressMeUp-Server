@@ -61,7 +61,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String jwtToken = JWT.create()
                 .withSubject("토큰 발급")
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME ))  // 만료시간(1000=1초)
-                .withClaim("id", principalDetails.getUser().getId())
+                .withClaim("id", principalDetails.getUser().getUserId())
                 .withClaim("nickname", principalDetails.getUser().getNickname())
                 .sign(Algorithm.HMAC512("dressmeup"));  // 내 서버만 아는 고유 시크릿키
 //        System.out.println(jwtToken);
@@ -72,6 +72,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         // 인증 실패 로그 추가
         System.out.println("JwtAuthenticationFilter - Authentication failed: " + failed.getMessage());
+
+        // 401 Unauthorized 에러 코드 반환
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write("Authentication failed: " + failed.getMessage());
 
     }
 }
