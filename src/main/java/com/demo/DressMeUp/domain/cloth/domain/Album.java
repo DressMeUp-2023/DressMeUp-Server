@@ -20,8 +20,6 @@ public class Album {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    private Long user_id;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -35,4 +33,9 @@ public class Album {
 //    @ColumnDefault("null")
     private Long dress_id;
 
+    private boolean image_like;
+
+    public void setImage_like(boolean status) {
+        this.image_like = status;
+    }
 }
