@@ -18,7 +18,11 @@ public enum BaseResponseStatus {
     NOT_COMPLETED_DRESSING(true, 400, "옷을 다 입혀주세요."),
     NO_CLOTHES_TYPE(true, 400, "옷 타입을 제대로 지정해주세요."),
     DRESS_UP_COMPLETED(true, 200, "dress-up 저장을 완료했습니다."),
-    FAILED_TO_DRESS_UP(false, 500, "dress-up 저장에 실패하였습니다.");
+    FAILED_TO_DRESS_UP(false, 500, "dress-up 저장에 실패하였습니다."),
+    NO_PERMISSION(false, 403, "권한이 없습니다"),
+    DELETE_LIKE(true, 200, "좋아요를 취소했습니다."),
+    ADD_LIKE(true, 200, "좋아요를 눌렀습니다."),
+    NO_ALBUM_FOUND(false, 400, "해당 이미지를 찾을 수 없습니다.");
 
     private final boolean isSuccess;
 
