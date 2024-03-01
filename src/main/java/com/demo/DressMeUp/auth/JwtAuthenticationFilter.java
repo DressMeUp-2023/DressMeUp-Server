@@ -73,5 +73,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 인증 실패 로그 추가
         System.out.println("JwtAuthenticationFilter - Authentication failed: " + failed.getMessage());
 
+        // 401 Unauthorized 에러 코드 반환
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write("Authentication failed: " + failed.getMessage());
+
     }
 }
