@@ -1,4 +1,4 @@
-package com.demo.DressMeUp.domain.user;
+package com.demo.DressMeUp.domain.user.api;
 
 import lombok.RequiredArgsConstructor;
 import net.nurigo.sdk.NurigoApp;
@@ -14,11 +14,11 @@ import java.util.Random;
 
 @RestController
 @RequiredArgsConstructor
-public class UserController {
+public class MessageController {
 
     private final DefaultMessageService messageService;
 
-    public UserController() {
+    public MessageController() {
         this.messageService = NurigoApp.INSTANCE.initialize("NCSNFZ8HGOG1MMZD", "KHBW2YGT0UDUQ41FKECXYKFJIQ0YO6MT", "https://api.coolsms.co.kr");
 
     }
@@ -43,5 +43,4 @@ public class UserController {
         return response;
 
     }
-
 }

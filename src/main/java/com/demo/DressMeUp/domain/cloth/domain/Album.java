@@ -1,6 +1,6 @@
-package com.demo.DressMeUp.domain;
+package com.demo.DressMeUp.domain.cloth.domain;
 
-import com.demo.DressMeUp.domain.user.User;
+import com.demo.DressMeUp.domain.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,19 +20,22 @@ public class Album {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    private Long user_id;
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ColumnDefault("null")
+//    @ColumnDefault("null")
     private Long top_id;
 
-    @ColumnDefault("null")
+//    @ColumnDefault("null")
     private Long bottoms_id;
 
-    @ColumnDefault("null")
+//    @ColumnDefault("null")
     private Long dress_id;
 
+    private boolean image_like;
+
+    public void setImage_like(boolean status) {
+        this.image_like = status;
+    }
 }

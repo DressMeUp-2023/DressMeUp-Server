@@ -1,4 +1,4 @@
-package com.demo.DressMeUp.domain;
+package com.demo.DressMeUp.domain.cloth.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-@Table(name = "bottoms")
+@Table(name = "top")
 @Entity
-public class Bottoms {
+public class Top {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

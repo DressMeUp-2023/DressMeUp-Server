@@ -1,8 +1,6 @@
-package com.demo.DressMeUp.domain.user;
+package com.demo.DressMeUp.domain.user.domain;
 
-import com.demo.DressMeUp.domain.Album;
-import com.demo.DressMeUp.domain.Gender;
-import com.demo.DressMeUp.domain.UserModel;
+import com.demo.DressMeUp.domain.cloth.domain.Album;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,8 +25,19 @@ public class User {
 
     private boolean authenticated;  // 핸드폰 인증 여부
 
-    @OneToOne(mappedBy = "user")
-    private Album album;
+    @Column(unique = true, nullable = false)
+    private String userId;  // 아이디
+
+    @Column(nullable = false)
+    private String password;  // 비밀번호
+
+    private String roles;
+
+    @Column(unique = true)
+    private String nickname;
+
+    @OneToMany(mappedBy = "user")
+    private List<Album> album;
 
     @OneToMany(mappedBy = "user")
     private List<UserModel> userModel;
