@@ -88,13 +88,10 @@ public class UserService {
 
         try {
             User loginUser = userRepository.findById(userId).get();
-            String modelImage = s3UploadService.upload(multipartFile, "userModel");
+            String modelImage = s3UploadService.upload(multipartFile, "userModel");  // 이미지 업로드
 
             Optional<UserModel> byUserId = userModelRepository.findByUserId(loginUser.getId());
             byUserId.get().changeImage(modelImage);
-//            UserModel userModel = userModelRepository.save(UserModel.builder()
-//                    .user(loginUser)
-//                    .image(modelImage).build());
 
             return ModelRes.builder()
                     .id(loginUser.getId())
@@ -117,9 +114,9 @@ public class UserService {
             if (clothReq.getType().equals("BOTTOM")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "bottom");
                 Bottom bottom = bottomRepository.save(Bottom.builder()
-                                .image(imageUrl)
-                                .user_id(clothReq.getUserId())
-                                .build());
+                        .image(imageUrl)
+                        .user_id(clothReq.getUserId())
+                        .build());
                 url = imageUrl;
             } else if (clothReq.getType().equals("TOP")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "top");
