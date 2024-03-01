@@ -9,6 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 public class ClothRes {
 
-    private Long id;
+    private Long id;  // 사용자id
     private String image;
 }

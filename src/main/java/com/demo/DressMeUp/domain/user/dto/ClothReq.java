@@ -9,6 +9,5 @@ import lombok.*;
 @NoArgsConstructor
 public class ClothReq {
 
-    private Long userId;
     private String type;  // top, bottom, dress
 }

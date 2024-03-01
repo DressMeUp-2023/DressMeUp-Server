@@ -51,19 +51,21 @@ public class UserController {
 
     }
 
-    @PostMapping("/clothes")
-    public BaseResponse<ClothRes> uploadClothes(@RequestPart ClothReq clothReq, @RequestPart(value="image")MultipartFile multipartFile) throws BaseException {
+    @PostMapping("/auth/clothes")
+    public BaseResponse<ClothRes> uploadClothes(Authentication authentication, @RequestPart ClothReq clothReq, @RequestPart(value="image")MultipartFile multipartFile) throws BaseException {
         try {
-            return new BaseResponse(userService.uploadClothes(clothReq, multipartFile));
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            return new BaseResponse(userService.uploadClothes(principalDetails.getUser(), clothReq, multipartFile));
         } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }
     }
 
-    @PostMapping("/{userId}/dress-up")
-    public BaseResponse dressUp(@RequestBody DressUpReq dressUpReq, @PathVariable Long userId) {
+    @PostMapping("/auth/dress-up")
+    public BaseResponse dressUp(Authentication authentication, @RequestBody DressUpReq dressUpReq) {
         try {
-            userService.dressUp(dressUpReq, userId);
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            userService.dressUp(dressUpReq, principalDetails.getUser().getId());
             return new BaseResponse(DRESS_UP_COMPLETED);
         } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());

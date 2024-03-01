@@ -105,31 +105,31 @@ public class UserService {
     }
 
     @Transactional
-    public ClothRes uploadClothes(ClothReq clothReq, MultipartFile multipartFile) throws BaseException {
-        if (!userRepository.existsById(clothReq.getUserId())) {
+    public ClothRes uploadClothes(User user, ClothReq clothReq, MultipartFile multipartFile) throws BaseException {
+        if (!userRepository.existsById(user.getId())) {
             throw new BaseException(NO_USER_FOUND);
         }
         String url = "";
         try {
             if (clothReq.getType().equals("BOTTOM")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "bottom");
-                Bottom bottom = bottomRepository.save(Bottom.builder()
+                bottomRepository.save(Bottom.builder()
                         .image(imageUrl)
-                        .user_id(clothReq.getUserId())
+                        .user_id(user.getId())
                         .build());
                 url = imageUrl;
             } else if (clothReq.getType().equals("TOP")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "top");
-                Top top = topRepository.save(Top.builder()
+                topRepository.save(Top.builder()
                         .image(imageUrl)
-                        .user_id(clothReq.getUserId())
+                        .user_id(user.getId())
                         .build());
                 url = imageUrl;
             } else if (clothReq.getType().equals("DRESS")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "dress");
-                Dress dress = dressRepository.save(Dress.builder()
+                dressRepository.save(Dress.builder()
                         .image(imageUrl)
-                        .user_id(clothReq.getUserId())
+                        .user_id(user.getId())
                         .build());
                 url = imageUrl;
             } else {
@@ -137,7 +137,7 @@ public class UserService {
             }
 
             return ClothRes.builder()
-                    .id(clothReq.getUserId())
+                    .id(user.getId())
                     .image(url).build();
 
 
@@ -156,13 +156,16 @@ public class UserService {
         User loginUser = userRepository.findById(userId).get();
 
         if (dressUpReq.getCount() == 2) {
-            Album album = albumRepository.save(Album.builder()
+            if (dressUpReq.getTopId() == null || dressUpReq.getBottomId() == null) {
+                throw new BaseException(NOT_COMPLETED_DRESSING);
+            }
+            albumRepository.save(Album.builder()
                     .user(loginUser)
                     .top_id(dressUpReq.getTopId())
                     .bottoms_id(dressUpReq.getBottomId())
                     .dress_id(null).build());
         } else {
-            Album album = albumRepository.save(Album.builder()
+            albumRepository.save(Album.builder()
                     .user(loginUser)
                     .top_id(null)
                     .bottoms_id(null)
