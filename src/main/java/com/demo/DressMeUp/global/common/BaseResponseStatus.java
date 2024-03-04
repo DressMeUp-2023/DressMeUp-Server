@@ -11,6 +11,8 @@ import lombok.Getter;
 public enum BaseResponseStatus {
     SUCCESS(true, 200, "요청에 성공했습니다"),
     SUCCESS_TO_SIGNUP(true, 200, "회원가입에 성공했습니다"),
+    ACCESSED_CODE(true, 200, "인증번호가 일치합니다."),
+    DENIED_CODE(true, 400, "인증번호가 틀렸습니다."),
     NICKNAME_ALREADY_EXISTS(true, 400, "해당 닉네임은 사용 중 입니다."),
     FAILED_TO_SIGNUP(true, 400, "회원가입에 실패했습니다."),
     NO_USER_FOUND(true, 400, "해당 유저는 존재하지 않습니다."),
