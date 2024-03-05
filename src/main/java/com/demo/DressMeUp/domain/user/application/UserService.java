@@ -43,7 +43,7 @@ public class UserService {
     private final AlbumRepository albumRepository;
 
     @Transactional
-    public LoginRes signup(SignUpReq signUpReq) throws BaseException {
+    public LoginRes signup(SignUpReq signUpReq, MultipartFile multipartFile) throws BaseException {
 
         if (userRepository.existsByNickname(signUpReq.getNickname())) {
             throw new BaseException(NICKNAME_ALREADY_EXISTS);
@@ -53,6 +53,7 @@ public class UserService {
         try {
 
             String encodedPassword = passwordEncoder.encode(signUpReq.getPassword());
+            String modelImage = s3UploadService.upload(multipartFile, "userModel");  // 이미지 업로드
 
             User loginUser = userRepository.save(User.builder()
                     .phonenum(signUpReq.getPhonenumber())
@@ -65,11 +66,11 @@ public class UserService {
                     .build());
             log.info("유저 : " + signUpReq.getNickname() +" 회원가입에 성공했습니다");
 
+//            System.out.println("이미지: " +modelImage);
             UserModel userModel = UserModel.builder()
                     .user(loginUser)
-                    .image("")
+                    .image(modelImage)
                     .build();
-            userModel.GenderImage(signUpReq.getGender());
 
             userModelRepository.save(userModel);
             return LoginRes.from(loginUser);
@@ -78,7 +79,6 @@ public class UserService {
         }
 
     }
-
     @Transactional
     public ModelRes selectModel(Long userId, MultipartFile multipartFile) throws BaseException {
 
@@ -115,21 +115,22 @@ public class UserService {
                 String imageUrl = s3UploadService.upload(multipartFile, "bottom");
                 bottomRepository.save(Bottom.builder()
                         .image(imageUrl)
-                        .user_id(user.getId())
+                        .user(user)
                         .build());
                 url = imageUrl;
             } else if (clothReq.getType().equals("TOP")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "top");
+                System.out.println("imageURl: " + imageUrl);
                 topRepository.save(Top.builder()
                         .image(imageUrl)
-                        .user_id(user.getId())
+                        .user(user)
                         .build());
                 url = imageUrl;
             } else if (clothReq.getType().equals("DRESS")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "dress");
                 dressRepository.save(Dress.builder()
                         .image(imageUrl)
-                        .user_id(user.getId())
+                        .user(user)
                         .build());
                 url = imageUrl;
             } else {

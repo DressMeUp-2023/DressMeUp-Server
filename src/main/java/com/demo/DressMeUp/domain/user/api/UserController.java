@@ -28,17 +28,28 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/sign-up")
-    public BaseResponse<LoginRes> signup(@RequestBody SignUpReq signUpReq) {
-        try {
+    public BaseResponse<LoginRes> signup(@RequestPart SignUpReq signUpReq, @RequestPart(value="image") MultipartFile multipartFile) {
+//    public BaseResponse<LoginRes> signup(SignUpReq signUpReq) {
 
-            return new BaseResponse(userService.signup(signUpReq));
+        try {
+            return new BaseResponse(userService.signup(signUpReq, multipartFile));
         } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }
 
     }
+//    @PostMapping("/sign-up")
+//    public BaseResponse<LoginRes> signup(@RequestBody SignUpReq signUpReq) {
+//        try {
+//
+//            return new BaseResponse(userService.signup(signUpReq));
+//        } catch (BaseException e) {
+//            return new BaseResponse<>(e.getStatus());
+//        }
+//
+//    }
 
-    @PostMapping("/auth/model")
+    @PatchMapping("/auth/model")
     public BaseResponse<ModelRes> selectModel(Authentication authentication,@RequestPart(value="image")MultipartFile multipartFile) throws BaseException{
 
         try {
