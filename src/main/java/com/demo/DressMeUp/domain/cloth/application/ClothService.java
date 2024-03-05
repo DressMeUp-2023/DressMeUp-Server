@@ -8,13 +8,17 @@ import com.demo.DressMeUp.domain.cloth.domain.Album;
 import com.demo.DressMeUp.domain.cloth.domain.Bottom;
 import com.demo.DressMeUp.domain.cloth.domain.Dress;
 import com.demo.DressMeUp.domain.cloth.domain.Top;
+import com.demo.DressMeUp.domain.cloth.dto.ClosetRes;
 import com.demo.DressMeUp.domain.cloth.dto.ClothReq;
 import com.demo.DressMeUp.domain.user.UserRepository;
+import com.demo.DressMeUp.domain.user.dto.ClothRes;
 import com.demo.DressMeUp.global.common.BaseException;
+import kotlin.collections.ArrayDeque;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +57,54 @@ public class ClothService {
             }
         }
         throw new BaseException(NO_ALBUM_FOUND);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ClosetRes> getClosetTop(Long userId) {
+
+        List<Top> byUser_id = topRepository.findByUser_id(userId);
+        List<ClosetRes> closetResList = new ArrayList<>();
+        for (Top top: byUser_id) {
+            ClosetRes closetRes = ClosetRes.builder()
+                    .imageUrl(top.getImage())
+                    .build();
+            System.out.println("top.getImage() : " +top.getImage());
+            closetResList.add(closetRes);
+        }
+
+        return closetResList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<ClosetRes> getClosetBottom(Long userId) {
+
+        List<Bottom> byUser_id = bottomRepository.findByUser_id(userId);
+        List<ClosetRes> closetResList = new ArrayList<>();
+        for (Bottom bottom: byUser_id) {
+            ClosetRes closetRes = ClosetRes.builder()
+                    .imageUrl(bottom.getImage())
+                    .build();
+            System.out.println("bottom.getImage() : " +bottom.getImage());
+            closetResList.add(closetRes);
+        }
+
+        return closetResList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<ClosetRes> getClosetDress(Long userId) {
+
+        List<Dress> byUser_id = dressRepository.findByUser_id(userId);
+        List<ClosetRes> closetResList = new ArrayList<>();
+        for (Dress dress: byUser_id) {
+            ClosetRes closetRes = ClosetRes.builder()
+                    .imageUrl(dress.getImage())
+                    .build();
+            System.out.println("dress.getImage() : " +dress.getImage());
+            closetResList.add(closetRes);
+        }
+
+        return closetResList;
     }
 
 }

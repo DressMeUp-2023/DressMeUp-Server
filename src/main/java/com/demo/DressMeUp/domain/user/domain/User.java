@@ -1,6 +1,9 @@
 package com.demo.DressMeUp.domain.user.domain;
 
 import com.demo.DressMeUp.domain.cloth.domain.Album;
+import com.demo.DressMeUp.domain.cloth.domain.Bottom;
+import com.demo.DressMeUp.domain.cloth.domain.Dress;
+import com.demo.DressMeUp.domain.cloth.domain.Top;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,4 +48,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @OneToMany(mappedBy = "user")
+    private List<Top> tops;
+
+    @OneToMany(mappedBy = "user")
+    private List<Bottom> bottoms;
+
+    @OneToMany(mappedBy = "user")
+    private List<Dress> dresses;
 }

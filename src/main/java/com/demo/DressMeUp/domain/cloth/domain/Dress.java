@@ -1,5 +1,6 @@
 package com.demo.DressMeUp.domain.cloth.domain;
 
+import com.demo.DressMeUp.domain.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,5 +22,8 @@ public class Dress {
 
     private String image;
 
-    private Long user_id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

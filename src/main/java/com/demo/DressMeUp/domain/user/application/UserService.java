@@ -115,21 +115,22 @@ public class UserService {
                 String imageUrl = s3UploadService.upload(multipartFile, "bottom");
                 bottomRepository.save(Bottom.builder()
                         .image(imageUrl)
-                        .user_id(user.getId())
+                        .user(user)
                         .build());
                 url = imageUrl;
             } else if (clothReq.getType().equals("TOP")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "top");
+                System.out.println("imageURl: " + imageUrl);
                 topRepository.save(Top.builder()
                         .image(imageUrl)
-                        .user_id(user.getId())
+                        .user(user)
                         .build());
                 url = imageUrl;
             } else if (clothReq.getType().equals("DRESS")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "dress");
                 dressRepository.save(Dress.builder()
                         .image(imageUrl)
-                        .user_id(user.getId())
+                        .user(user)
                         .build());
                 url = imageUrl;
             } else {
