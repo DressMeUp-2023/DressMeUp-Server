@@ -64,6 +64,11 @@ jobs:
       - name: Check the JAR file
         run: ls -l build/libs
 
+      # build한 후 프로젝트를 압축한다.
+      - name: Make zip file
+        run: zip -r ./$GITHUB_SHA.zip .
+        shell: bash
+
       # (4) AWS인증 (IAM사용자 Access Key, Secret Key활용)
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
