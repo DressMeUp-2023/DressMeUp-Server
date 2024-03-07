@@ -10,6 +10,6 @@ public class DressMeUpApplication {
 		SpringApplication.run(DressMeUpApplication.class, args);
 	}
 
-// 서버 연결용 test
+// 서버 연결용 test 2
 
 }
