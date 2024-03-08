@@ -1,13 +1,7 @@
 package com.demo.DressMeUp.domain.user.application;
 
-import com.demo.DressMeUp.domain.cloth.AlbumRepository;
-import com.demo.DressMeUp.domain.cloth.domain.Album;
-import com.demo.DressMeUp.domain.cloth.BottomRepository;
-import com.demo.DressMeUp.domain.cloth.DressRepository;
-import com.demo.DressMeUp.domain.cloth.TopRepository;
-import com.demo.DressMeUp.domain.cloth.domain.Bottom;
-import com.demo.DressMeUp.domain.cloth.domain.Dress;
-import com.demo.DressMeUp.domain.cloth.domain.Top;
+import com.demo.DressMeUp.domain.cloth.*;
+import com.demo.DressMeUp.domain.cloth.domain.*;
 import com.demo.DressMeUp.domain.user.UserModelRepository;
 import com.demo.DressMeUp.domain.user.UserRepository;
 import com.demo.DressMeUp.domain.user.domain.Gender;
@@ -37,9 +31,7 @@ public class UserService {
     private final S3UploadService s3UploadService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserModelRepository userModelRepository;
-    private final BottomRepository bottomRepository;
-    private final TopRepository topRepository;
-    private final DressRepository dressRepository;
+    private final ClothRepository clothRepository;
     private final AlbumRepository albumRepository;
 
     @Transactional
@@ -111,26 +103,37 @@ public class UserService {
         }
         String url = "";
         try {
-            if (clothReq.getType().equals("BOTTOM")) {
-                String imageUrl = s3UploadService.upload(multipartFile, "bottom");
-                bottomRepository.save(Bottom.builder()
+            if (clothReq.getType().equals("SHORT")) {
+                String imageUrl = s3UploadService.upload(multipartFile, "short");
+                clothRepository.save(Cloth.builder()
+                            .image(imageUrl)
+                            .user(user)
+                            .clothType(ClothType.fromType(clothReq.getType()))
+                            .build());
+                url = imageUrl;
+            } else if (clothReq.getType().equals("TROUSER")) {
+                String imageUrl = s3UploadService.upload(multipartFile, "trouser");
+                clothRepository.save(Cloth.builder()
                         .image(imageUrl)
                         .user(user)
+                        .clothType(ClothType.fromType(clothReq.getType()))
                         .build());
                 url = imageUrl;
-            } else if (clothReq.getType().equals("TOP")) {
+            }
+            else if (clothReq.getType().equals("TOP")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "top");
-                System.out.println("imageURl: " + imageUrl);
-                topRepository.save(Top.builder()
+                clothRepository.save(Cloth.builder()
                         .image(imageUrl)
                         .user(user)
+                        .clothType(ClothType.fromType(clothReq.getType()))
                         .build());
                 url = imageUrl;
             } else if (clothReq.getType().equals("DRESS")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "dress");
-                dressRepository.save(Dress.builder()
+                clothRepository.save(Cloth.builder()
                         .image(imageUrl)
                         .user(user)
+                        .clothType(ClothType.fromType(clothReq.getType()))
                         .build());
                 url = imageUrl;
             } else {

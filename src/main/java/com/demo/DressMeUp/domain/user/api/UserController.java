@@ -1,18 +1,11 @@
 package com.demo.DressMeUp.domain.user.api;
 
 import com.demo.DressMeUp.auth.PrincipalDetails;
-import com.demo.DressMeUp.domain.cloth.domain.Dress;
 import com.demo.DressMeUp.domain.user.application.UserService;
 import com.demo.DressMeUp.domain.user.dto.*;
 import com.demo.DressMeUp.global.common.BaseException;
 import com.demo.DressMeUp.global.common.BaseResponse;
-import com.demo.DressMeUp.global.common.BaseResponseStatus;
 import lombok.RequiredArgsConstructor;
-import net.nurigo.sdk.NurigoApp;
-import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
-import net.nurigo.sdk.message.response.SingleMessageSentResponse;
-import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,16 +31,6 @@ public class UserController {
         }
 
     }
-//    @PostMapping("/sign-up")
-//    public BaseResponse<LoginRes> signup(@RequestBody SignUpReq signUpReq) {
-//        try {
-//
-//            return new BaseResponse(userService.signup(signUpReq));
-//        } catch (BaseException e) {
-//            return new BaseResponse<>(e.getStatus());
-//        }
-//
-//    }
 
     @PatchMapping("/auth/model")
     public BaseResponse<ModelRes> selectModel(Authentication authentication,@RequestPart(value="image")MultipartFile multipartFile) throws BaseException{

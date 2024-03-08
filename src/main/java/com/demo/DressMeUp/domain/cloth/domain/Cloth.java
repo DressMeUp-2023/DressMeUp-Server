@@ -12,9 +12,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-@Table(name = "dress")
+@Table(name = "cloth")
 @Entity
-public class Dress {
+public class Cloth {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +22,10 @@ public class Dress {
 
     private String image;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Enumerated(EnumType.STRING)
+    private ClothType clothType;
 }
