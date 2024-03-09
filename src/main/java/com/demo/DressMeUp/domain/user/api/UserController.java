@@ -55,12 +55,23 @@ public class UserController {
         }
     }
 
-    @PostMapping("/auth/dress-up")
-    public BaseResponse dressUp(Authentication authentication, @RequestBody DressUpReq dressUpReq) {
+//    @PostMapping("/auth/dress-up")
+//    public BaseResponse dressUp(Authentication authentication, @RequestBody DressUpReq dressUpReq) {
+//        try {
+//            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+//            userService.dressUp(dressUpReq, principalDetails.getUser().getId());
+//            return new BaseResponse(DRESS_UP_COMPLETED);
+//        } catch (BaseException e) {
+//            return new BaseResponse<>(e.getStatus());
+//        }
+//    }
+
+    @PatchMapping("/auth/mypage")
+    public BaseResponse myPage(Authentication authentication, @RequestBody InfoReq infoReq) {
         try {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-            userService.dressUp(dressUpReq, principalDetails.getUser().getId());
-            return new BaseResponse(DRESS_UP_COMPLETED);
+            userService.myPage(principalDetails.getUser(), infoReq);
+            return new BaseResponse(MY_PAGE_INFO_UPDATED);
         } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }

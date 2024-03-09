@@ -42,6 +42,10 @@ public class UserService {
 
         }
 
+        if (userRepository.existsByPhonenum(signUpReq.getPhonenumber())) {
+            throw new BaseException(PHONENUM_ALREADY_EXISTS);
+        }
+
         try {
 
             String encodedPassword = passwordEncoder.encode(signUpReq.getPassword());
@@ -150,31 +154,41 @@ public class UserService {
         }
     }
 
-    @Transactional
-    public void dressUp(DressUpReq dressUpReq, Long userId) throws BaseException {
+//    @Transactional
+//    public void dressUp(DressUpReq dressUpReq, Long userId) throws BaseException {
+//
+//        if (!userRepository.existsById(userId)) {
+//            throw new BaseException(NO_USER_FOUND);
+//        }
+//
+//        User loginUser = userRepository.findById(userId).get();
+//
+//        if (dressUpReq.getCount() == 2) {
+//            if (dressUpReq.getTopId() == null || dressUpReq.getBottomId() == null) {
+//                throw new BaseException(NOT_COMPLETED_DRESSING);
+//            }
+//            albumRepository.save(Album.builder()
+//                    .user(loginUser)
+//                    .top_id(dressUpReq.getTopId())
+//                    .bottoms_id(dressUpReq.getBottomId())
+//                    .dress_id(null).build());
+//        } else {
+//            albumRepository.save(Album.builder()
+//                    .user(loginUser)
+//                    .top_id(null)
+//                    .bottoms_id(null)
+//                    .dress_id(dressUpReq.getDressId()).build());
+//        }
+//
+//    }
 
-        if (!userRepository.existsById(userId)) {
+    @Transactional
+    public void myPage(User user, InfoReq infoReq) throws BaseException{
+        if (!userRepository.existsById(user.getId())) {
             throw new BaseException(NO_USER_FOUND);
         }
-
-        User loginUser = userRepository.findById(userId).get();
-
-        if (dressUpReq.getCount() == 2) {
-            if (dressUpReq.getTopId() == null || dressUpReq.getBottomId() == null) {
-                throw new BaseException(NOT_COMPLETED_DRESSING);
-            }
-            albumRepository.save(Album.builder()
-                    .user(loginUser)
-                    .top_id(dressUpReq.getTopId())
-                    .bottoms_id(dressUpReq.getBottomId())
-                    .dress_id(null).build());
-        } else {
-            albumRepository.save(Album.builder()
-                    .user(loginUser)
-                    .top_id(null)
-                    .bottoms_id(null)
-                    .dress_id(dressUpReq.getDressId()).build());
-        }
-
+        String encodedPassword = passwordEncoder.encode(infoReq.getPassword());
+        user.updateInfo(infoReq.getNickname(), encodedPassword);
+        userRepository.save(user);
     }
 }
