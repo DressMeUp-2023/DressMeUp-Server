@@ -14,6 +14,7 @@ public enum BaseResponseStatus {
     ACCESSED_CODE(true, 200, "인증번호가 일치합니다."),
     DENIED_CODE(true, 400, "인증번호가 틀렸습니다."),
     NICKNAME_ALREADY_EXISTS(true, 400, "해당 닉네임은 사용 중 입니다."),
+    PHONENUM_ALREADY_EXISTS(true, 400, "해당 전화번호는 이미 가입되어 있습니다."),
     FAILED_TO_SIGNUP(true, 400, "회원가입에 실패했습니다."),
     NO_USER_FOUND(true, 400, "해당 유저는 존재하지 않습니다."),
     FAILED_TO_UPLOAD_CLOTHES(true, 400, "옷 업로드에 실패했습니다."),
@@ -24,7 +25,8 @@ public enum BaseResponseStatus {
     NO_PERMISSION(false, 403, "권한이 없습니다"),
     DELETE_LIKE(true, 200, "좋아요를 취소했습니다."),
     ADD_LIKE(true, 200, "좋아요를 눌렀습니다."),
-    NO_ALBUM_FOUND(false, 400, "해당 이미지를 찾을 수 없습니다.");
+    NO_ALBUM_FOUND(false, 400, "해당 이미지를 찾을 수 없습니다."),
+    MY_PAGE_INFO_UPDATED(true, 200, "마이페이지 정보가 수정되었습니다.");
 
     private final boolean isSuccess;
 

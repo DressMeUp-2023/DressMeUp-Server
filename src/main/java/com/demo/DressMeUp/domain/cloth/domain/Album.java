@@ -24,14 +24,7 @@ public class Album {
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @ColumnDefault("null")
-    private Long top_id;
-
-//    @ColumnDefault("null")
-    private Long bottoms_id;
-
-//    @ColumnDefault("null")
-    private Long dress_id;
+    private String image;
 
     private boolean image_like;
 

@@ -26,15 +26,15 @@ public class User {
 
     private boolean authenticated;  // 핸드폰 인증 여부
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 20)
     private String userId;  // 아이디
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String password;  // 비밀번호
 
     private String roles;
 
-    @Column(unique = true)
+    @Column(unique = true, length = 20)
     private String nickname;
 
     @OneToMany(mappedBy = "user")
@@ -48,4 +48,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Cloth> clothes;
+
+    public void updateInfo(String nickname, String password) {
+        this.nickname = nickname;
+        this.password = password;
+    }
 }
