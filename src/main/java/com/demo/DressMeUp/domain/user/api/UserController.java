@@ -21,11 +21,10 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/sign-up")
-    public BaseResponse<LoginRes> signup(@RequestPart SignUpReq signUpReq, @RequestPart(value="image") MultipartFile multipartFile) {
-//    public BaseResponse<LoginRes> signup(SignUpReq signUpReq) {
-
+    public BaseResponse<LoginRes> signup(@RequestBody SignUpReq signUpReq) {
         try {
-            return new BaseResponse(userService.signup(signUpReq, multipartFile));
+            System.out.println("Controller: " + signUpReq);
+            return new BaseResponse(userService.signup(signUpReq));
         } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }
@@ -33,12 +32,12 @@ public class UserController {
     }
 
     @PatchMapping("/auth/model")
-    public BaseResponse<ModelRes> selectModel(Authentication authentication,@RequestPart(value="image")MultipartFile multipartFile) throws BaseException{
+    public BaseResponse<ModelRes> selectModel(Authentication authentication,@RequestBody ImageReq imageReq) throws BaseException{
 
         try {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             System.out.println(principalDetails.getUser().getId());
-            return new BaseResponse(userService.selectModel(principalDetails.getUser().getId(), multipartFile));
+            return new BaseResponse(userService.selectModel(principalDetails.getUser().getId(), imageReq));
         } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }
