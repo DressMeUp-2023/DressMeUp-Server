@@ -12,6 +12,7 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Random;
 
 import static com.demo.DressMeUp.global.common.BaseResponseStatus.*;
@@ -26,7 +27,7 @@ public class MessageController {
 
     @Autowired
     public MessageController(UserRepository userRepository) {
-        this.messageService = NurigoApp.INSTANCE.initialize("NCS4WTXMO3JH9YJZ", "DRZUHZGGFQRVM51IVRAHPZA9LNBIDBLW", "https://api.coolsms.co.kr");
+        this.messageService = NurigoApp.INSTANCE.initialize("NCSNFZ8HGOG1MMZD", "KHBW2YGT0UDUQ41FKECXYKFJIQ0YO6MT", "https://api.coolsms.co.kr");
         this.userRepository = userRepository;
     }
 
@@ -59,11 +60,13 @@ public class MessageController {
     }
 
     @PostMapping("/confirm/code")  // 인증번호 입력받으면 confirmNum이랑 일치하는지 확인, true false 반환
-    public BaseResponse confirmCode(@RequestBody String confirmCode) {
-        System.out.println("confirmNum : " + confirmNum);
-        System.out.println("confirmCode : " + confirmCode);
+    public BaseResponse confirmCode(@RequestBody Map<String, String> requestBody) {
+        String receivedConfirmCode = requestBody.get("confirmCode");
 
-        if (confirmNum.equals(confirmCode)) {
+        System.out.println("confirmNum : " + confirmNum);
+        System.out.println("confirmCode : " + receivedConfirmCode);
+
+        if (confirmNum.trim().equals(receivedConfirmCode.trim())) {
             return new BaseResponse(ACCESSED_CODE);
         } else {
             return new BaseResponse(DENIED_CODE);
