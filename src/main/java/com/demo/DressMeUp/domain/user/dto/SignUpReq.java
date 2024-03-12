@@ -22,4 +22,6 @@ public class SignUpReq {
     private String password;
 
     private String phonenumber;
+
+    private String image;
 }

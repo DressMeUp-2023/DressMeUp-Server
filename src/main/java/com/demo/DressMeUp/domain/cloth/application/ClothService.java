@@ -54,9 +54,9 @@ public class ClothService {
     @Transactional(readOnly = true)
     public List<ClosetRes> getClosetTop(Long userId) {
 
-        List<Cloth> byUser_id = clothRepository.findByUser_id(userId);
+        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.TOP);
         List<ClosetRes> closetResList = new ArrayList<>();
-        for (Cloth cloth: byUser_id) {
+        for (Cloth cloth: byUserAndType) {
             ClosetRes closetRes = ClosetRes.builder()
                     .imageUrl(cloth.getImage())
                     .build();
@@ -69,9 +69,9 @@ public class ClothService {
     @Transactional(readOnly = true)
     public List<ClosetRes> getClosetShort(Long userId) {
 
-        List<Cloth> byUser_id = clothRepository.findByUser_id(userId);
+        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.SHORT);
         List<ClosetRes> closetResList = new ArrayList<>();
-        for (Cloth cloth: byUser_id) {
+        for (Cloth cloth: byUserAndType) {
             ClosetRes closetRes = ClosetRes.builder()
                     .imageUrl(cloth.getImage())
                     .build();
@@ -85,9 +85,9 @@ public class ClothService {
     @Transactional(readOnly = true)
     public List<ClosetRes> getClosetTrouser(Long userId) {
 
-        List<Cloth> byUser_id = clothRepository.findByUser_id(userId);
+        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.TROUSER);
         List<ClosetRes> closetResList = new ArrayList<>();
-        for (Cloth cloth: byUser_id) {
+        for (Cloth cloth: byUserAndType) {
             ClosetRes closetRes = ClosetRes.builder()
                     .imageUrl(cloth.getImage())
                     .build();
@@ -100,9 +100,9 @@ public class ClothService {
     @Transactional(readOnly = true)
     public List<ClosetRes> getClosetDress(Long userId) {
 
-        List<Cloth> byUser_id = clothRepository.findByUser_id(userId);
+        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.DRESS);
         List<ClosetRes> closetResList = new ArrayList<>();
-        for (Cloth cloth: byUser_id) {
+        for (Cloth cloth: byUserAndType) {
             ClosetRes closetRes = ClosetRes.builder()
                     .imageUrl(cloth.getImage())
                     .build();

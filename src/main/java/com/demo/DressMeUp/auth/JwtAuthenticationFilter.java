@@ -66,6 +66,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sign(Algorithm.HMAC512("dressmeup"));  // 내 서버만 아는 고유 시크릿키
 //        System.out.println(jwtToken);
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);  // 헤더에 담겨 사용자에게 응답된다
+
+        // 응답 본문에 사용자의 nickname 추가
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"nickname\" : \"" + principalDetails.getUser().getNickname() + "\"}");
     }
 
     @Override

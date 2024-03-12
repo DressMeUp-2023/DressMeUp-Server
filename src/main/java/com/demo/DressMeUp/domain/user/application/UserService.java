@@ -35,23 +35,20 @@ public class UserService {
     private final AlbumRepository albumRepository;
 
     @Transactional
-    public LoginRes signup(SignUpReq signUpReq, MultipartFile multipartFile) throws BaseException {
+    public LoginRes signup(SignUpReq signUpReq) throws BaseException {
+        System.out.println("signup: " + signUpReq);
 
         if (userRepository.existsByNickname(signUpReq.getNickname())) {
             throw new BaseException(NICKNAME_ALREADY_EXISTS);
 
         }
 
-        if (userRepository.existsByPhonenum(signUpReq.getPhonenumber())) {
-            throw new BaseException(PHONENUM_ALREADY_EXISTS);
-        }
-
         try {
+            System.out.println("try: " + signUpReq);
 
             String encodedPassword = passwordEncoder.encode(signUpReq.getPassword());
-            String modelImage = s3UploadService.upload(multipartFile, "userModel");  // 이미지 업로드
 
-            User loginUser = userRepository.save(User.builder()
+            User newUser = User.builder()
                     .phonenum(signUpReq.getPhonenumber())
                     .authenticated(true)
                     .roles(signUpReq.getRole())
@@ -59,45 +56,41 @@ public class UserService {
                     .password(encodedPassword)
                     .nickname(signUpReq.getNickname())
                     .gender(Gender.valueOf(signUpReq.getGender()))
-                    .build());
+                    .build();
+            userRepository.save(newUser);
+
             log.info("유저 : " + signUpReq.getNickname() +" 회원가입에 성공했습니다");
 
-//            System.out.println("이미지: " +modelImage);
             UserModel userModel = UserModel.builder()
-                    .user(loginUser)
-                    .image(modelImage)
+                    .user(newUser)
+                    .image(signUpReq.getImage())
                     .build();
 
             userModelRepository.save(userModel);
-            return LoginRes.from(loginUser);
+            return LoginRes.from(newUser);
         } catch (Exception e) {
+            System.out.println(e);
             throw new BaseException(FAILED_TO_SIGNUP);
         }
 
     }
     @Transactional
-    public ModelRes selectModel(Long userId, MultipartFile multipartFile) throws BaseException {
+    public ModelRes selectModel(Long userId, ImageReq imageReq) throws BaseException {
 
         if (!userRepository.existsById(userId)) {
             throw new BaseException(NO_USER_FOUND);
         }
 
-        try {
-            User loginUser = userRepository.findById(userId).get();
-            String modelImage = s3UploadService.upload(multipartFile, "userModel");  // 이미지 업로드
+        User loginUser = userRepository.findById(userId).get();
+        Optional<UserModel> byUserId = userModelRepository.findByUserId(loginUser.getId());
+        byUserId.get().changeImage(imageReq.getImage());
 
-            Optional<UserModel> byUserId = userModelRepository.findByUserId(loginUser.getId());
-            byUserId.get().changeImage(modelImage);
+        return ModelRes.builder()
+                .id(loginUser.getId())
+                .nickname(loginUser.getNickname())
+                .modelImage(imageReq.getImage())
+                .build();
 
-            return ModelRes.builder()
-                    .id(loginUser.getId())
-                    .nickname(loginUser.getNickname())
-                    .modelImage(modelImage)
-                    .build();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Transactional
