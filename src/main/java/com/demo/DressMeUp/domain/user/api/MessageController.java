@@ -32,7 +32,9 @@ public class MessageController {
     }
 
     @PostMapping("/send-code")
-    public SingleMessageSentResponse sendOne(@RequestParam("toPhone") String toNumber) throws BaseException {
+    public SingleMessageSentResponse sendOne(@RequestBody Map<String, String> request) throws BaseException {
+
+        String toNumber = request.get("toPhone");
 
         // 해당 번호로 가입한 사용자 있는지 검증
         if (userRepository.existsByPhonenum(toNumber)) {
@@ -67,8 +69,10 @@ public class MessageController {
         System.out.println("confirmCode : " + receivedConfirmCode);
 
         if (confirmNum.trim().equals(receivedConfirmCode.trim())) {
+            System.out.println("인증번호 일치");
             return new BaseResponse(ACCESSED_CODE);
         } else {
+            System.out.println("인증번호 불일치");
             return new BaseResponse(DENIED_CODE);
         }
     }

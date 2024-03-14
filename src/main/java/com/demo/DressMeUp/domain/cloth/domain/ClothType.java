@@ -2,7 +2,8 @@ package com.demo.DressMeUp.domain.cloth.domain;
 
 public enum ClothType {
     TOP,
-    BOTTOM,
+    L_SKIRT,
+    S_SKIRT,
     DRESS,
     SHORT,
     TROUSER;
@@ -13,6 +14,10 @@ public enum ClothType {
                 return TOP;
             case "DRESS":
                 return DRESS;
+            case "L_SKIRT":
+                return L_SKIRT;
+            case "S_SKIRT":
+                return S_SKIRT;
             case "SHORT":
                 return SHORT;
             case "TROUSER":

@@ -52,6 +52,35 @@ public class ClothService {
     }
 
     @Transactional(readOnly = true)
+    public List<ClosetRes> getClosetLSkirt(Long userId) {
+
+        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.L_SKIRT);
+        List<ClosetRes> closetResList = new ArrayList<>();
+        for (Cloth cloth: byUserAndType) {
+            ClosetRes closetRes = ClosetRes.builder()
+                    .imageUrl(cloth.getImage())
+                    .build();
+            closetResList.add(closetRes);
+        }
+
+        return closetResList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<ClosetRes> getClosetSSkirt(Long userId) {
+
+        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.S_SKIRT);
+        List<ClosetRes> closetResList = new ArrayList<>();
+        for (Cloth cloth: byUserAndType) {
+            ClosetRes closetRes = ClosetRes.builder()
+                    .imageUrl(cloth.getImage())
+                    .build();
+            closetResList.add(closetRes);
+        }
+
+        return closetResList;
+    }
+    @Transactional(readOnly = true)
     public List<ClosetRes> getClosetTop(Long userId) {
 
         List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.TOP);
