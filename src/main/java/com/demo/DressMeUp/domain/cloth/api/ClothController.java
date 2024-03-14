@@ -41,6 +41,22 @@ public class ClothController {
     /*
     옷장 조회하기(short, trouser, top, dress 나눠서)
      */
+
+    @GetMapping("/auth/closet/l-skirt")
+    public BaseResponse<ClosetRes> getClosetLSkirt(Authentication authentication) throws BaseException{
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        return new BaseResponse(clothService.getClosetLSkirt(principalDetails.getUser().getId()));
+
+    }
+
+    @GetMapping("/auth/closet/s-skirt")
+    public BaseResponse<ClosetRes> getClosetSSkirt(Authentication authentication) throws BaseException{
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        return new BaseResponse(clothService.getClosetSSkirt(principalDetails.getUser().getId()));
+
+    }
     @GetMapping("/auth/closet/short")
     public BaseResponse<ClosetRes> getClosetShort(Authentication authentication) throws BaseException{
 
