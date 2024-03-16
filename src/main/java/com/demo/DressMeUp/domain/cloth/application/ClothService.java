@@ -52,13 +52,16 @@ public class ClothService {
     }
 
     @Transactional(readOnly = true)
-    public List<ClosetRes> getClosetLSkirt(Long userId) {
+    public List<ClosetRes> getCloset(Long userId) {
 
-        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.L_SKIRT);
+        List<Cloth> byUser_id = clothRepository.findByUser_id(userId);
+
+
         List<ClosetRes> closetResList = new ArrayList<>();
-        for (Cloth cloth: byUserAndType) {
+        for (Cloth cloth: byUser_id) {
             ClosetRes closetRes = ClosetRes.builder()
                     .imageUrl(cloth.getImage())
+                    .type(cloth.getClothType().toString())
                     .build();
             closetResList.add(closetRes);
         }
@@ -66,79 +69,94 @@ public class ClothService {
         return closetResList;
     }
 
-    @Transactional(readOnly = true)
-    public List<ClosetRes> getClosetSSkirt(Long userId) {
-
-        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.S_SKIRT);
-        List<ClosetRes> closetResList = new ArrayList<>();
-        for (Cloth cloth: byUserAndType) {
-            ClosetRes closetRes = ClosetRes.builder()
-                    .imageUrl(cloth.getImage())
-                    .build();
-            closetResList.add(closetRes);
-        }
-
-        return closetResList;
-    }
-    @Transactional(readOnly = true)
-    public List<ClosetRes> getClosetTop(Long userId) {
-
-        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.TOP);
-        List<ClosetRes> closetResList = new ArrayList<>();
-        for (Cloth cloth: byUserAndType) {
-            ClosetRes closetRes = ClosetRes.builder()
-                    .imageUrl(cloth.getImage())
-                    .build();
-            closetResList.add(closetRes);
-        }
-
-        return closetResList;
-    }
-
-    @Transactional(readOnly = true)
-    public List<ClosetRes> getClosetShort(Long userId) {
-
-        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.SHORT);
-        List<ClosetRes> closetResList = new ArrayList<>();
-        for (Cloth cloth: byUserAndType) {
-            ClosetRes closetRes = ClosetRes.builder()
-                    .imageUrl(cloth.getImage())
-                    .build();
-            System.out.println("short.getImage() : " +cloth.getImage());
-            closetResList.add(closetRes);
-        }
-
-        return closetResList;
-    }
-
-    @Transactional(readOnly = true)
-    public List<ClosetRes> getClosetTrouser(Long userId) {
-
-        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.TROUSER);
-        List<ClosetRes> closetResList = new ArrayList<>();
-        for (Cloth cloth: byUserAndType) {
-            ClosetRes closetRes = ClosetRes.builder()
-                    .imageUrl(cloth.getImage())
-                    .build();
-            closetResList.add(closetRes);
-        }
-
-        return closetResList;
-    }
-
-    @Transactional(readOnly = true)
-    public List<ClosetRes> getClosetDress(Long userId) {
-
-        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.DRESS);
-        List<ClosetRes> closetResList = new ArrayList<>();
-        for (Cloth cloth: byUserAndType) {
-            ClosetRes closetRes = ClosetRes.builder()
-                    .imageUrl(cloth.getImage())
-                    .build();
-            closetResList.add(closetRes);
-        }
-
-        return closetResList;
-    }
+//    @Transactional(readOnly = true)
+//    public List<ClosetRes> getClosetLSkirt(Long userId) {
+//
+//        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.L_SKIRT);
+//        List<ClosetRes> closetResList = new ArrayList<>();
+//        for (Cloth cloth: byUserAndType) {
+//            ClosetRes closetRes = ClosetRes.builder()
+//                    .imageUrl(cloth.getImage())
+//                    .build();
+//            closetResList.add(closetRes);
+//        }
+//
+//        return closetResList;
+//    }
+//
+//    @Transactional(readOnly = true)
+//    public List<ClosetRes> getClosetSSkirt(Long userId) {
+//
+//        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.S_SKIRT);
+//        List<ClosetRes> closetResList = new ArrayList<>();
+//        for (Cloth cloth: byUserAndType) {
+//            ClosetRes closetRes = ClosetRes.builder()
+//                    .imageUrl(cloth.getImage())
+//                    .build();
+//            closetResList.add(closetRes);
+//        }
+//
+//        return closetResList;
+//    }
+//    @Transactional(readOnly = true)
+//    public List<ClosetRes> getClosetTop(Long userId) {
+//
+//        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.TOP);
+//        List<ClosetRes> closetResList = new ArrayList<>();
+//        for (Cloth cloth: byUserAndType) {
+//            ClosetRes closetRes = ClosetRes.builder()
+//                    .imageUrl(cloth.getImage())
+//                    .build();
+//            closetResList.add(closetRes);
+//        }
+//
+//        return closetResList;
+//    }
+//
+//    @Transactional(readOnly = true)
+//    public List<ClosetRes> getClosetShort(Long userId) {
+//
+//        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.SHORT);
+//        List<ClosetRes> closetResList = new ArrayList<>();
+//        for (Cloth cloth: byUserAndType) {
+//            ClosetRes closetRes = ClosetRes.builder()
+//                    .imageUrl(cloth.getImage())
+//                    .build();
+//            System.out.println("short.getImage() : " +cloth.getImage());
+//            closetResList.add(closetRes);
+//        }
+//
+//        return closetResList;
+//    }
+//
+//    @Transactional(readOnly = true)
+//    public List<ClosetRes> getClosetTrouser(Long userId) {
+//
+//        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.TROUSER);
+//        List<ClosetRes> closetResList = new ArrayList<>();
+//        for (Cloth cloth: byUserAndType) {
+//            ClosetRes closetRes = ClosetRes.builder()
+//                    .imageUrl(cloth.getImage())
+//                    .build();
+//            closetResList.add(closetRes);
+//        }
+//
+//        return closetResList;
+//    }
+//
+//    @Transactional(readOnly = true)
+//    public List<ClosetRes> getClosetDress(Long userId) {
+//
+//        List<Cloth> byUserAndType = clothRepository.findByUser_idAndClothType(userId, ClothType.DRESS);
+//        List<ClosetRes> closetResList = new ArrayList<>();
+//        for (Cloth cloth: byUserAndType) {
+//            ClosetRes closetRes = ClosetRes.builder()
+//                    .imageUrl(cloth.getImage())
+//                    .build();
+//            closetResList.add(closetRes);
+//        }
+//
+//        return closetResList;
+//    }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Random;
 
 import static com.demo.DressMeUp.global.common.BaseResponseStatus.*;
@@ -25,6 +26,18 @@ public class UserController {
         try {
             System.out.println("Controller: " + signUpReq);
             return new BaseResponse(userService.signup(signUpReq));
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+
+    }
+
+    @GetMapping("/auth/model")
+    public BaseResponse<ModelRes> getModel(Authentication authentication) throws BaseException{
+
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            return new BaseResponse(userService.getModel(principalDetails.getUser().getId()));
         } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }
@@ -51,6 +64,18 @@ public class UserController {
             return new BaseResponse(userService.uploadClothes(principalDetails.getUser(), clothReq, multipartFile));
         } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    @GetMapping("/auth/image")
+    public BaseResponse imageReturn(Authentication authentication, @RequestPart(value="image")MultipartFile multipartFile) {
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            return new BaseResponse(userService.imageReturn(multipartFile));
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
