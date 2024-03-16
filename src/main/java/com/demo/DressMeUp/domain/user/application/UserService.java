@@ -74,6 +74,31 @@ public class UserService {
         }
 
     }
+
+    @Transactional
+    public ModelRes getModel(Long userId) throws BaseException {
+
+        if (!userRepository.existsById(userId)) {
+            throw new BaseException(NO_USER_FOUND);
+        }
+
+        User loginUser = userRepository.findById(userId).get();
+        Optional<UserModel> byUserId = userModelRepository.findByUserId(loginUser.getId());
+
+        return ModelRes.builder()
+                .id(loginUser.getId())
+                .nickname(loginUser.getNickname())
+                .modelImage(byUserId.get().getImage())
+                .build();
+
+    }
+
+    @Transactional
+    public String imageReturn(MultipartFile multipartFile) throws BaseException, IOException {
+        return s3UploadService.upload(multipartFile, "model");
+
+    }
+
     @Transactional
     public ModelRes selectModel(Long userId, ImageReq imageReq) throws BaseException {
 
