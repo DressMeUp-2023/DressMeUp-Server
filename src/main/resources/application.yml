@@ -1,0 +1,40 @@
+server:
+  address: 0.0.0.0
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAQ5IEBH3LNNBYDBND
+      secret-key: 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
+    s3:
+      bucket: dressmeup-user
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3307/dressmeup?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://dressmeupdb.chl7p9tqzuib.ap-northeast-2.rds.amazonaws.com:3306/dressmeup_db?serverTimeZone=UTC&characterEncoding=UTF-8
+#    username: root
+#    password: 1234
+    username: admin
+    password: Abcd1234
+  jpa:
+    hibernate:
+      ddl-auto: update #create update none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    #      properties:
+    #        hibernate:
+    #          dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
