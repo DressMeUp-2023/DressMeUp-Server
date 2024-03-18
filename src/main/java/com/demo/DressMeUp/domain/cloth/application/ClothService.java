@@ -3,7 +3,9 @@ package com.demo.DressMeUp.domain.cloth.application;
 import com.demo.DressMeUp.domain.cloth.*;
 import com.demo.DressMeUp.domain.cloth.domain.*;
 import com.demo.DressMeUp.domain.cloth.dto.ClosetRes;
+import com.demo.DressMeUp.domain.cloth.dto.ClothReq;
 import com.demo.DressMeUp.domain.user.UserRepository;
+import com.demo.DressMeUp.domain.user.domain.User;
 import com.demo.DressMeUp.global.common.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -67,6 +69,16 @@ public class ClothService {
         }
 
         return closetResList;
+    }
+
+    @Transactional
+    public void saveCloth(User user, ClothReq clothReq) {
+        Cloth newCloth = Cloth.builder()
+                .image(clothReq.getImageUrl())
+                .user(user)
+                .clothType(ClothType.fromType(clothReq.getType()))
+                .build();
+        clothRepository.save(newCloth);
     }
 
 //    @Transactional(readOnly = true)

@@ -201,4 +201,14 @@ public class UserService {
         user.updateInfo(infoReq.getNickname(), encodedPassword);
         userRepository.save(user);
     }
+
+    @Transactional
+    public void saveModel(User user, String model) {
+        UserModel userModel = UserModel.builder()
+                .user(user)
+                .image(model)
+                .build();
+
+        userModelRepository.save(userModel);
+    }
 }
