@@ -125,16 +125,16 @@ public class UserService {
         }
         String url = "";
         try {
-            if (clothReq.getType().equals("SHORT")) {
-                String imageUrl = s3UploadService.upload(multipartFile, "short");
+            if (clothReq.getType().equals("TOP")) {
+                String imageUrl = s3UploadService.upload(multipartFile, "TOP");
                 clothRepository.save(Cloth.builder()
                             .image(imageUrl)
                             .user(user)
                             .clothType(ClothType.fromType(clothReq.getType()))
                             .build());
                 url = imageUrl;
-            } else if (clothReq.getType().equals("TROUSER")) {
-                String imageUrl = s3UploadService.upload(multipartFile, "trouser");
+            } else if (clothReq.getType().equals("DRESS")) {
+                String imageUrl = s3UploadService.upload(multipartFile, "DRESS");
                 clothRepository.save(Cloth.builder()
                         .image(imageUrl)
                         .user(user)
@@ -142,16 +142,8 @@ public class UserService {
                         .build());
                 url = imageUrl;
             }
-            else if (clothReq.getType().equals("TOP")) {
-                String imageUrl = s3UploadService.upload(multipartFile, "top");
-                clothRepository.save(Cloth.builder()
-                        .image(imageUrl)
-                        .user(user)
-                        .clothType(ClothType.fromType(clothReq.getType()))
-                        .build());
-                url = imageUrl;
-            } else if (clothReq.getType().equals("DRESS")) {
-                String imageUrl = s3UploadService.upload(multipartFile, "dress");
+            else if (clothReq.getType().equals("BOTTOM")) {
+                String imageUrl = s3UploadService.upload(multipartFile, "BOTTOM");
                 clothRepository.save(Cloth.builder()
                         .image(imageUrl)
                         .user(user)
