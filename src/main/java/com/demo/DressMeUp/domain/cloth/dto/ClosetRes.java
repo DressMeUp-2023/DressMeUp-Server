@@ -9,6 +9,9 @@ public class ClosetRes {
     @JsonProperty("imageUrl")
     private String imageUrl;
 
+    @JsonProperty("original")
+    private String original;
+
     @JsonProperty("type")
     private String type;
 }

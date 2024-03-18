@@ -63,6 +63,7 @@ public class ClothService {
         for (Cloth cloth: byUser_id) {
             ClosetRes closetRes = ClosetRes.builder()
                     .imageUrl(cloth.getImage())
+                    .original(cloth.getOriginal())
                     .type(cloth.getClothType().toString())
                     .build();
             closetResList.add(closetRes);
@@ -77,6 +78,7 @@ public class ClothService {
                 .image(clothReq.getImageUrl())
                 .user(user)
                 .clothType(ClothType.fromType(clothReq.getType()))
+                .original(clothReq.getOriginal())
                 .build();
         clothRepository.save(newCloth);
     }
