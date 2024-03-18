@@ -70,7 +70,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 응답 본문에 사용자의 nickname 추가
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"nickname\" : \"" + principalDetails.getUser().getNickname() + "\"}");
+        response.getWriter().write("{\"id\" : \"" + principalDetails.getUser().getUserId() + "\", \"nickname\" : \"" + principalDetails.getUser().getNickname() + "\"}");
     }
 
     @Override
