@@ -3,14 +3,12 @@ package com.demo.DressMeUp.domain.cloth.api;
 import com.demo.DressMeUp.auth.PrincipalDetails;
 import com.demo.DressMeUp.domain.cloth.application.ClothService;
 import com.demo.DressMeUp.domain.cloth.dto.ClosetRes;
+import com.demo.DressMeUp.domain.cloth.dto.ClothReq;
 import com.demo.DressMeUp.global.common.BaseException;
 import com.demo.DressMeUp.global.common.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,6 +44,12 @@ public class ClothController {
 
     }
 
+    @PostMapping("/auth/image")
+    public BaseResponse saveCloth(Authentication authentication, @RequestBody ClothReq clothReq) throws BaseException {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        clothService.saveCloth(principalDetails.getUser(), clothReq);
+        return new BaseResponse(CLOTH_UPDATED);
+    }
 
 //    /*
 //    옷장 조회하기(short, trouser, top, dress 나눠서)

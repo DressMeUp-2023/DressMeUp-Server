@@ -26,7 +26,9 @@ public enum BaseResponseStatus {
     DELETE_LIKE(true, 200, "좋아요를 취소했습니다."),
     ADD_LIKE(true, 200, "좋아요를 눌렀습니다."),
     NO_ALBUM_FOUND(false, 400, "해당 이미지를 찾을 수 없습니다."),
-    MY_PAGE_INFO_UPDATED(true, 200, "마이페이지 정보가 수정되었습니다.");
+    MY_PAGE_INFO_UPDATED(true, 200, "마이페이지 정보가 수정되었습니다."),
+    CLOTH_UPDATED(true, 200, "옷 이미지를 저장했습니다."),
+    MODEL_UPDATED(true, 200, "모델 이미지를 저장했습니다.");
 
     private final boolean isSuccess;
 

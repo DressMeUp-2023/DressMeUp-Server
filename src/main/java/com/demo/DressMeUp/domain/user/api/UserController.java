@@ -102,4 +102,12 @@ public class UserController {
     }
 
 
+    @PostMapping("/auth/model")
+    public BaseResponse saveModel(Authentication authentication, @RequestBody String model) throws BaseException {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        userService.saveModel(principalDetails.getUser(), model);
+        return new BaseResponse(MODEL_UPDATED);
+    }
+
+
 }
