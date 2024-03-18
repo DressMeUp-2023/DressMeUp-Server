@@ -1,6 +1,7 @@
 package com.demo.DressMeUp.domain.user.api;
 
 import com.demo.DressMeUp.auth.PrincipalDetails;
+import com.demo.DressMeUp.domain.cloth.dto.UploadReq;
 import com.demo.DressMeUp.domain.user.application.UserService;
 import com.demo.DressMeUp.domain.user.dto.*;
 import com.demo.DressMeUp.global.common.BaseException;
@@ -57,11 +58,11 @@ public class UserController {
 
     }
 
-    @PostMapping("/auth/clothes")
-    public BaseResponse<ClothRes> uploadClothes(Authentication authentication, @RequestPart ClothReq clothReq, @RequestPart(value="image")MultipartFile multipartFile) throws BaseException {
+    @PostMapping("/auth/clothes")  // 옷 업로드
+    public BaseResponse<ClothRes> uploadClothes(Authentication authentication, @RequestPart UploadReq uploadReq, @RequestPart(value="image")MultipartFile multipartFile) throws BaseException {
         try {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-            return new BaseResponse(userService.uploadClothes(principalDetails.getUser(), clothReq, multipartFile));
+            return new BaseResponse(userService.uploadClothes(principalDetails.getUser(), uploadReq, multipartFile));
         } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }

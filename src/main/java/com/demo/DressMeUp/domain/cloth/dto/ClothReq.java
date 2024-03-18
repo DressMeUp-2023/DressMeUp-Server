@@ -8,5 +8,7 @@ import lombok.Getter;
 public class ClothReq {
 
     private String imageUrl;
+    private String original;
     private String type;
+
 }

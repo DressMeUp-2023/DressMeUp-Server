@@ -22,6 +22,8 @@ public class Cloth {
 
     private String image;
 
+    private String original;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

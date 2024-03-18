@@ -2,6 +2,7 @@ package com.demo.DressMeUp.domain.user.application;
 
 import com.demo.DressMeUp.domain.cloth.*;
 import com.demo.DressMeUp.domain.cloth.domain.*;
+import com.demo.DressMeUp.domain.cloth.dto.UploadReq;
 import com.demo.DressMeUp.domain.user.UserModelRepository;
 import com.demo.DressMeUp.domain.user.UserRepository;
 import com.demo.DressMeUp.domain.user.domain.Gender;
@@ -119,35 +120,38 @@ public class UserService {
     }
 
     @Transactional
-    public ClothRes uploadClothes(User user, ClothReq clothReq, MultipartFile multipartFile) throws BaseException {
+    public ClothRes uploadClothes(User user, UploadReq uploadReq, MultipartFile multipartFile) throws BaseException {
         if (!userRepository.existsById(user.getId())) {
             throw new BaseException(NO_USER_FOUND);
         }
         String url = "";
         try {
-            if (clothReq.getType().equals("TOP")) {
+            if (uploadReq.getType().equals("TOP")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "TOP");
                 clothRepository.save(Cloth.builder()
                             .image(imageUrl)
                             .user(user)
-                            .clothType(ClothType.fromType(clothReq.getType()))
+                            .original(uploadReq.getOriginal())
+                            .clothType(ClothType.fromType(uploadReq.getType()))
                             .build());
                 url = imageUrl;
-            } else if (clothReq.getType().equals("DRESS")) {
+            } else if (uploadReq.getType().equals("DRESS")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "DRESS");
                 clothRepository.save(Cloth.builder()
                         .image(imageUrl)
                         .user(user)
-                        .clothType(ClothType.fromType(clothReq.getType()))
+                        .original(uploadReq.getOriginal())
+                        .clothType(ClothType.fromType(uploadReq.getType()))
                         .build());
                 url = imageUrl;
             }
-            else if (clothReq.getType().equals("BOTTOM")) {
+            else if (uploadReq.getType().equals("BOTTOM")) {
                 String imageUrl = s3UploadService.upload(multipartFile, "BOTTOM");
                 clothRepository.save(Cloth.builder()
                         .image(imageUrl)
                         .user(user)
-                        .clothType(ClothType.fromType(clothReq.getType()))
+                        .original(uploadReq.getOriginal())
+                        .clothType(ClothType.fromType(uploadReq.getType()))
                         .build());
                 url = imageUrl;
             } else {
